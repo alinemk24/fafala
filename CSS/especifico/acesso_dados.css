@@ -1,309 +1,420 @@
-:root {
-    /*Tudo provisório, esperar nati loira fazer a paleta do site*/
-    --azul: #3d6fe0;
-    --azul-escuro: #2c58c4;
-    --azul-claro: #eaf0fd;
-    --lilas: #ece9fb;
-    --texto: #1f2533;
-    --texto-suave: #5f6879;
-    --borda: #dfe4ec;
-    --fundo-campo: #f7f9fc;
-    --branco: #ffffff;
-    --erro: #c2410c;
-    --raio: 14px;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: "Nunito", "Segoe UI", Arial, Helvetica, sans-serif;
-    background:
-        radial-gradient(circle at 15% 10%, #d8e6ff 0%, transparent 45%),
-        radial-gradient(circle at 85% 90%, #e6e1ff 0%, transparent 45%),
-        #f1f4fa;
-    color: var(--texto);
-    min-height: 100vh;
-    line-height: 1.5;
-}
-
-/* Área principal */
-
-.pagina-cadastro {
+.pagina-acesso {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 16px;
+    padding: var(--espaco-gg) var(--espaco-m);
 }
 
-/* Cartão */
 
-.card-cadastro {
+.card-acesso {
     position: relative;
     width: 100%;
     max-width: 620px;
-    background: var(--branco);
-    padding: 40px 44px;
-    border-radius: 28px;
-    box-shadow: 0 20px 50px rgba(46, 69, 110, 0.10);
 }
 
-/* Cabeçalho */
 
-.cabecalho-cadastro {
+/* Cabeçalho: título e subtítulo centralizados */
+
+.cabecalho-acesso {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: var(--espaco-g);
 }
 
-.cabecalho-cadastro h1 {
-    font-size: 30px;
-    font-weight: 800;
-    line-height: 1.25;
-    color: var(--azul);
-    margin-bottom: 8px;
-}
-
-.cabecalho-cadastro p {
-    font-size: 15px;
+.cabecalho-acesso p {
+    font-size: 0.9375rem;
     color: var(--texto-suave);
 }
 
-/* Grupos de campos */
 
-.card-cadastro fieldset {
-    border: 1px solid var(--borda);
-    border-radius: 20px;
-    padding: 22px 22px 4px;
-    margin-bottom: 22px;
-    min-width: 0;
+/* Rodapé: link "Já tem conta? Entrar" */
+
+.rodape-acesso {
+    text-align: center;
+    margin-top: var(--espaco-g);
 }
 
-.card-cadastro legend {
-    padding: 0 8px;
-    font-size: 16px;
-    font-weight: 800;
-    color: var(--texto);
+.rodape-acesso p {
+    font-size: 0.9375rem;
+    color: var(--texto-suave);
 }
 
-/* Grade de 2 colunas (vira 1 coluna no celular) */
 
-.grade {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 16px;
+/* =====================================================
+   QUESTIONÁRIO
+   ===================================================== */
+
+.questionario {
+    width: 100%;
+    max-width: 600px;
 }
 
-/* Cada campo */
+.pagina-acesso:has(.questionario) {
+    align-items: flex-start;
+    padding: 72px var(--espaco-g) var(--espaco-gg);
+}
 
-.campo {
+.questionario .cabecalho-acesso {
+    margin-bottom: 36px;
+}
+
+.card-questionario {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-bottom: 18px;
+    gap: var(--espaco-g);
+    padding: 32px;
 }
 
-.campo label {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--texto);
-}
 
-.campo input {
-    width: 100%;
-    min-height: 52px;
-    padding: 14px 16px;
-    border: 1.5px solid var(--borda);
-    border-radius: var(--raio);
-    background: var(--fundo-campo);
-    color: var(--texto);
-    font-family: inherit;
-    font-size: 16px; 
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
-}
+/* Barra de progresso */
 
-.campo input::placeholder {
-    color: #9aa2b1;
-}
-
-.campo input:hover {
-    border-color: #c9d1de;
-}
-
-.campo input:focus {
-    background: var(--branco);
-    border-color: var(--azul);
-    box-shadow: 0 0 0 4px rgba(61, 111, 224, 0.15);
-}
-
-/* Erros só aparecem depois que a pessoa tenta enviar */
-
-.tentou-enviar .campo input:invalid {
-    border-color: var(--erro);
-    background: #fff7f3;
-}
-
-.dica {
-    font-size: 12.5px;
-    color: var(--texto-suave);
-}
-
-.mensagem-erro {
-    font-size: 12.5px;
-    font-weight: 700;
-    color: var(--erro);
-    min-height: 0;
-}
-
-.mensagem-erro:empty {
+.progresso {
     display: none;
 }
 
-/* Campo de senha com botão de olho */
-
-.campo-senha {
-    position: relative;
+.em-etapas .progresso {
+    display: block;
 }
 
-.campo-senha input {
-    padding-right: 52px;
-}
-
-.mostrar-senha {
-    position: absolute;
-    top: 50%;
-    right: 6px;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    display: grid;
-    place-items: center;
-    border: none;
-    border-radius: 10px;
-    background: transparent;
+.progresso-topo {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--espaco-m);
+    margin-bottom: 10px;
+    font-size: var(--texto-pequeno);
+    font-weight: 700;
     color: var(--texto-suave);
-    cursor: pointer;
 }
 
-.mostrar-senha:hover {
-    background: var(--azul-claro);
-    color: var(--azul);
+.progresso-grupo {
+    color: var(--cor-principal);
+    font-weight: 800;
 }
 
-.mostrar-senha[aria-pressed="true"] {
-    color: var(--azul);
+.progresso-barra {
+    height: 8px;
+    border-radius: 999px;
+    background: var(--borda);
+    overflow: hidden;
 }
 
-/* Ícones */
-
-.botao-cadastro svg,
-.mostrar-senha svg {
-    width: 22px;
-    height: 22px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+.progresso-preenchido {
+    width: 0;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--degrade-botao);
+    transition: width 0.35s ease;
 }
 
-/* Botão de cadastro */
 
-.botao-cadastro {
+/* Espaço do mascote (TEM QUE COLOCARRRRRR NÃO ESQUECER!!!!!!!!!!!!!!) */
+
+.mascote {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto;
+}
+
+.mascote:empty {
+    display: none;
+}
+
+.mascote img {
     width: 100%;
-    min-height: 56px;
-    padding: 14px 20px;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+/* Grupos (Acessibilidade, Perfil visual) */
+
+.grupo-perguntas {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-g);
+}
+
+.grupo-perguntas h2 {
+    font-size: var(--texto-medio);
+    margin-bottom: 0;
+}
+
+.em-etapas .grupo-perguntas h2 {
+    display: none;
+}
+
+.pergunta {
+    border: none;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+}
+
+.pergunta legend {
+    float: left;
+    width: 100%;
+    padding: 0;
+    margin-bottom: var(--espaco-g);
+    font-size: 1.125rem;
+    font-weight: 800;
+    line-height: 1.35;
+    color: var(--texto);
+}
+
+.pergunta legend + * {
+    clear: both;
+}
+
+.em-etapas .pergunta legend {
+    font-size: 1.5rem;
+    color: var(--cor-principal);
+    text-align: center;
+}
+
+.pergunta legend:focus {
+    outline: none;
+}
+
+.em-etapas .pergunta {
+    display: none;
+}
+
+.em-etapas .pergunta.ativa {
+    display: block;
+    animation: aparecer 0.35s ease both;
+}
+
+
+/* Opções de resposta*/
+
+.respostas {
+    display: grid;
+    gap: 12px;
+}
+
+.resposta {
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: none;
+    justify-content: space-between;
+    gap: var(--espaco-m);
+    min-height: var(--altura-botao);
+    padding: 14px 18px;
+    border: 2px solid var(--borda);
     border-radius: var(--raio);
-    background: var(--azul);
-    color: var(--branco);
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: background-color 0.2s, box-shadow 0.2s;
-}
-
-.botao-cadastro:hover {
-    background: var(--azul-escuro);
-    box-shadow: 0 8px 20px rgba(44, 88, 196, 0.22);
-}
-
-/* Link para entrar (final da página) */
-
-.rodape-cadastro {
-    text-align: center;
-    margin-top: 24px;
-}
-
-.rodape-cadastro p {
-    font-size: 15px;
-    color: var(--texto-suave);
-}
-
-.rodape-cadastro a {
-    color: var(--azul);
+    background: var(--branco);
+    font-size: 1.0625rem;
     font-weight: 700;
-    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s, transform 0.15s;
 }
 
-.rodape-cadastro a:hover {
-    text-decoration: underline;
+.resposta input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
 }
 
-/* Foco visível para quem navega pelo teclado */
+.resposta::after {
+    content: "";
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--borda-hover);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 0.8125rem;
+    color: var(--branco);
+    transition: background-color 0.2s, border-color 0.2s;
+}
 
-a:focus-visible,
-button:focus-visible {
-    outline: 3px solid var(--azul);
+.resposta:hover {
+    border-color: var(--borda-hover);
+    background: var(--fundo-campo);
+}
+
+.resposta:active {
+    transform: scale(0.98);
+}
+
+/* opção escolhida */
+.resposta:has(input:checked) {
+    border-color: var(--cor-principal);
+    background: var(--cor-clara);
+    color: var(--cor-principal);
+}
+
+.resposta:has(input:checked)::after {
+    content: "✓";
+    border-color: var(--cor-principal);
+    background: var(--cor-principal);
+}
+
+/* contorno de foco para quem navega pelo teclado */
+.resposta:has(input:focus-visible) {
+    outline: 3px solid var(--cor-principal);
     outline-offset: 3px;
 }
 
-/* ==========================
+
+/* Aviso "escolha uma opção" */
+
+.aviso-etapa {
+    text-align: center;
+}
+
+
+/* Mensagem antes de concluir */
+
+.mensagem-final {
+    padding: var(--espaco-m) 20px;
+    border-radius: var(--raio);
+    background: linear-gradient(135deg, rgba(159, 214, 176, 0.18), rgba(247, 241, 168, 0.28));
+    color: var(--texto-suave);
+    font-size: 0.9375rem;
+    text-align: center;
+}
+
+.em-etapas .mensagem-final {
+    display: none;
+}
+
+.em-etapas.ultima-etapa .mensagem-final {
+    display: block;
+}
+
+
+/* Botões Voltar / Próxima / Concluir */
+
+.navegacao {
+    display: flex;
+    gap: 12px;
+}
+
+.navegacao .botao {
+    flex: 1;
+}
+
+.navegacao .botao-secundario {
+    flex: 0 0 auto;
+    width: auto;
+}
+
+#btnVoltar,
+#btnProxima {
+    display: none;
+}
+
+.em-etapas #btnVoltar,
+.em-etapas #btnProxima {
+    display: inline-flex;
+}
+
+.navegacao [hidden] {
+    display: none !important;
+}
+
+
+/* Animação de entrada de cada pergunta */
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateX(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+/* =====================================================
    RESPONSIVO
-========================== */
+   ===================================================== */
+
+/* tablet e computador*/
+@media (min-width: 641px) {
+
+    .questionario {
+        max-width: 720px;
+    }
+
+    .questionario .cabecalho-acesso h1 {
+        font-size: 2.25rem;
+    }
+
+    .questionario .cabecalho-acesso p {
+        font-size: 1.0625rem;
+    }
+
+    .card-questionario {
+        padding: 40px 48px;
+        gap: 32px;
+    }
+
+    .progresso-topo {
+        font-size: 0.9375rem;
+    }
+
+    .progresso-barra {
+        height: 10px;
+    }
+
+    .em-etapas .pergunta legend {
+        font-size: 1.875rem;
+        margin-bottom: 32px;
+    }
+
+    .respostas {
+        gap: var(--espaco-m);
+    }
+
+    .resposta {
+        min-height: 68px;
+        padding: 16px 24px;
+        font-size: 1.25rem;
+    }
+
+    .resposta::after {
+        width: 28px;
+        height: 28px;
+    }
+
+    .navegacao .botao {
+        min-height: 60px;
+        font-size: 1.125rem;
+    }
+}
 
 @media (max-width: 640px) {
 
-    .pagina-cadastro {
+    /* cadastro e login: cartão ocupa a tela inteira */
+    .pagina-acesso {
         padding: 0;
         align-items: stretch;
     }
 
-    .card-cadastro {
+    .card-acesso {
         max-width: none;
         min-height: 100vh;
-        padding: 40px 20px 32px;
         border-radius: 0;
         box-shadow: none;
     }
 
-    .grade {
-        grid-template-columns: 1fr;
+    /* questionário */
+    .pagina-acesso:has(.questionario) {
+        padding: 56px var(--espaco-m) var(--espaco-g);
+        align-items: flex-start;
     }
 
-    .cabecalho-cadastro h1 {
-        font-size: 26px;
+    .card-questionario {
+        padding: var(--espaco-g) 20px;
+        border-radius: var(--raio-cartao);
     }
 
-    .card-cadastro fieldset {
-        padding: 18px 16px 2px;
-    }
-}
-
-/* pra quem configurou o sistema pra reduzir animações */
-
-@media (prefers-reduced-motion: reduce) {
-    * {
-        transition: none !important;
-        animation: none !important;
+    .em-etapas .pergunta legend {
+        font-size: 1.375rem;
     }
 }
