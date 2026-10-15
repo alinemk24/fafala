@@ -1,10 +1,3 @@
-// =====================================================
-// FAFALA - QUESTIONÁRIO DO PRIMEIRO ACESSO
-// Mostra uma pergunta por vez, com barra de progresso.
-// Se o JavaScript não carregar, todas as perguntas
-// aparecem juntas e o formulário continua funcionando.
-// =====================================================
-
 const form = document.getElementById('formOnboarding');
 const perguntas = form.querySelectorAll('.pergunta');
 
@@ -90,8 +83,8 @@ btnConcluir.addEventListener('click', function () {
         return;
     }
 
-    // TODO (Pessoa 1): enviar as respostas para o PHP salvar no banco.
-    // Quando o PHP estiver pronto, trocar a linha abaixo por: form.submit();
+    // enviar as respostas para o PHP salvar no banco.
+    // Quando o PHP estiver pronto, trocar a linha abaixo por: form.submit()!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     console.log('Questionário respondido:', new FormData(form));
 });
 

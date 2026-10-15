@@ -221,6 +221,57 @@
                             </label>
                         </div>
 
+                        <div class="escolha-cor" role="radiogroup" aria-labelledby="titulo-cor">
+
+                            <p id="titulo-cor" class="escolha-cor-titulo">Escolha sua cor favorita</p>
+
+                            <div class="cores">
+                                <label class="cor-opcao" style="--fundo:#FBE1DF; --card:#F2A49E">
+                                    <input type="radio" name="tema_cor" value="vermelho">
+                                    <span class="cor-bolinha"></span>
+                                    Vermelho
+                                </label>
+                                <label class="cor-opcao" style="--fundo:#FDE7D3; --card:#F7B98A">
+                                    <input type="radio" name="tema_cor" value="laranja">
+                                    <span class="cor-bolinha"></span>
+                                    Laranja
+                                </label>
+                                <label class="cor-opcao" style="--fundo:#FFF8DC; --card:#F3E3A2">
+                                    <input type="radio" name="tema_cor" value="amarelo">
+                                    <span class="cor-bolinha"></span>
+                                    Amarelo
+                                </label>
+                                <label class="cor-opcao" style="--fundo:#E1F2DC; --card:#A9D89A">
+                                    <input type="radio" name="tema_cor" value="verde">
+                                    <span class="cor-bolinha"></span>
+                                    Verde
+                                </label>
+                                <label class="cor-opcao" style="--fundo:#D9F1EF; --card:#8FD3CC">
+                                    <input type="radio" name="tema_cor" value="turquesa">
+                                    <span class="cor-bolinha"></span>
+                                    Turquesa
+                                </label>
+                                <label class="cor-opcao" style="--fundo:#DDEBFA; --card:#9CC2EE">
+                                    <input type="radio" name="tema_cor" value="azul" checked>
+                                    <span class="cor-bolinha"></span>
+                                    Azul
+                                </label>
+                                <label class="cor-opcao" style="--fundo:#EAE2F7; --card:#BFA6E6">
+                                    <input type="radio" name="tema_cor" value="roxo">
+                                    <span class="cor-bolinha"></span>
+                                    Roxo
+                                </label>
+                                <label class="cor-opcao" style="--fundo:#FBE2EE; --card:#F2A9C9">
+                                    <input type="radio" name="tema_cor" value="rosa">
+                                    <span class="cor-bolinha"></span>
+                                    Rosa
+                                </label>
+                            </div>
+
+                            <p class="dica">Você pode mudar isso depois nas configurações.</p>
+
+                        </div>
+
                     </fieldset>
 
                 </section>

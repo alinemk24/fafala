@@ -1,27 +1,22 @@
 /* =====================================================
    FAFALA - CSS BASE
-   Responsável: Pessoa 2
-   Usado por TODAS as páginas.
-   Estilos de uma tela só vão em CSS/especifico/.
-   Variações de acessibilidade vão em acessibilidade.css (Pessoa 1).
+   Esse CSS é usado por TODAS as páginas
+   Estilos de uma tela só vão em CSS/especifico/
+   Variações de acessibilidade vão em acessibilidade.css
+   OBS: colocar a class no html como está aqui!!!!!
    ===================================================== */
 
 
 /* =====================================================
    1. VARIÁVEIS
-   Cores provisórias: trocar quando a paleta oficial ficar pronta.
-   Nunca escrever cor ou tamanho "solto" nas outras folhas:
-   sempre usar uma destas variáveis.
    ===================================================== */
 
 :root {
     /* cores principais */
     --cor-principal: #195068;        /* azul-esverdeado escuro: títulos, links, foco */
     --cor-principal-escura: #0f3546; /* hover de elementos com a cor principal */
-    --cor-destaque: #2c58c4;         /* azul vivo: detalhes e destaques */
     --cor-clara: #e8f3f0;            /* fundo suave (tom da cor principal) */
     --cor-clara-hover: #d7ebe5;
-    --lilas: #ece9fb;
 
     /* degradês (versão mais suave) */
     --verde: #9fd6b0;
@@ -49,11 +44,13 @@
     --sucesso: #15803d;
     --sucesso-fundo: #f0fdf4;
 
-    /* valores padrão do paciente (a Pessoa 1 altera estes) */
-    --cor-fundo-paciente: #ffffff;
-    --cor-card: #ffffff;
-    --tamanho-card: 140px;
-    --espaco-cards: 16px;
+    /* valores padrão do paciente (o PHP troca pelos valores salvos de cada paciente) */
+    --cor-fundo-paciente: #FBFAF7;  /* cor_fundo_tema */
+    --cor-card: #FFFFFF;            /* cor_card_tema */
+    --tamanho-card: 140px;          /* tamanho_card: Pequeno, Médio ou Grande */
+    --espaco-cards: 16px;           /* espacamento_cards: Normal ou Grande */
+    --colunas-cards: 3;             /* quantos cards por linha */
+    --texto-card: 1rem;             /* tamanho do texto embaixo do pictograma */
 
     /* tipografia */
     --fonte: "Nunito", "Segoe UI", Arial, Helvetica, sans-serif;
@@ -418,7 +415,7 @@ legend {
    7. BOTÕES
    ===================================================== */
 
-/* botão principal (degradê verde → amarelo) */
+/* botão principal */
 .botao {
     width: 100%;
     min-height: var(--altura-botao);
@@ -437,8 +434,6 @@ legend {
     transition: filter 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
-/* o degradê não anima com transition, então o hover
-   escurece um pouco e levanta o botão */
 .botao:hover {
     filter: brightness(0.95);
     box-shadow: var(--sombra-botao);
@@ -446,12 +441,11 @@ legend {
     text-decoration: none;
 }
 
-/* botão de largura automática (não ocupa a linha toda) */
 .botao-auto {
     width: auto;
 }
 
-/* botão secundário: fundo suave, para ações menos importantes */
+/* botão secundário */
 .botao-secundario {
     background: var(--cor-clara);
     color: var(--cor-principal);
@@ -479,7 +473,7 @@ legend {
     transform: none;
 }
 
-/* botão só com ícone (ex.: editar, excluir numa lista) */
+/* botão só com ícone */
 .botao-icone {
     width: 44px;
     height: 44px;
@@ -517,8 +511,6 @@ legend {
 
 /* =====================================================
    9. ACESSIBILIDADE GERAL
-   (o que vale sempre; as configurações do paciente
-   ficam no acessibilidade.css)
    ===================================================== */
 
 /* contorno visível para quem navega pelo teclado */
@@ -529,7 +521,6 @@ button:focus-visible,
     outline-offset: 3px;
 }
 
-/* esconde da tela mas mantém para leitores de tela */
 .visualmente-oculto {
     position: absolute;
     width: 1px;
@@ -571,7 +562,7 @@ button:focus-visible,
     }
 }
 
-/* para quem configurou o sistema para reduzir animações */
+/* reduzir animações */
 @media (prefers-reduced-motion: reduce) {
     * {
         transition: none !important;
