@@ -63,9 +63,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $idUsuario
             ]);
 
+            // pega o número do paciente que acabou de ser criado
+            $idPaciente = $pdo->lastInsertId();
+
             $pdo->commit();
 
-            header("Location: login.php?cadastro=sucesso");
+            // guarda na sessão quem acabou de se cadastrar
+            $_SESSION['id_usuario'] = $idUsuario;
+            $_SESSION['id_paciente'] = $idPaciente;
+
+            header("Location: questionario.php");
             exit;
 
         } catch (PDOException $ex) {

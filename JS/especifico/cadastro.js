@@ -79,10 +79,4 @@ form.addEventListener('submit', function (e) {
 
         return;
     }
-
-    // impede o envio padrão do formulário
-    e.preventDefault();
-
-    // abre a página do questionário
-    window.location.href = 'questionario.php';
 });

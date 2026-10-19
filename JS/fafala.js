@@ -16,7 +16,7 @@ const Fafala = (function () {
 
   async function api(acao, parametros, dadosPost) {
     const url =
-      "api.php?acao=" + acao + "&" + new URLSearchParams(parametros || {});
+      "/fafala/PHP/tecnico/api.php?acao=" + acao + "&" + new URLSearchParams(parametros || {});
     const resposta = await fetch(
       url,
       dadosPost ? { method: "POST", body: dadosPost } : undefined,
@@ -36,7 +36,7 @@ const Fafala = (function () {
 
   function imagemOuVazio(imagemId, nome) {
     if (imagemId)
-      return el("img", { src: "imagem.php?id=" + imagemId, alt: nome });
+      return el("img", { src: "/fafala/PHP/tecnico/imagem.php?id=" + imagemId, alt: nome });
     return el("div", {
       class: "sem-imagem",
       text: nome.charAt(0).toUpperCase(),

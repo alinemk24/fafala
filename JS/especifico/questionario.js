@@ -77,15 +77,13 @@ form.addEventListener('change', function () {
     avisoEtapa.textContent = '';
 });
 
-btnConcluir.addEventListener('click', function () {
+// ao concluir, só deixa enviar se a última pergunta foi respondida
+// (as anteriores já foram conferidas no botão "Próxima")
+form.addEventListener('submit', function (evento) {
     if (!respondida(atual)) {
+        evento.preventDefault();
         avisarSemResposta();
-        return;
     }
-
-    // enviar as respostas para o PHP salvar no banco.
-    // Quando o PHP estiver pronto, trocar a linha abaixo por: form.submit()!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    console.log('Questionário respondido:', new FormData(form));
 });
 
 

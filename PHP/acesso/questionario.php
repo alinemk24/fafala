@@ -1,3 +1,162 @@
+<?php
+// conexao.php já liga a sessão e cria o $pdo
+require_once __DIR__ . "/../tecnico/conexao.php";
+
+// Só entra aqui quem acabou de se cadastrar (ou fez login)
+if (!isset($_SESSION['id_paciente'])) {
+    header("Location: login.php");
+    exit;
+}
+
+$idPaciente = $_SESSION['id_paciente'];
+$erro = "";
+
+// Cores de cada tema do "Personalizado": [fundo, card]
+// (ficam aqui no PHP para ninguém conseguir mandar uma cor qualquer)
+$temas = [
+    "vermelho" => ["#FBE1DF", "#F2A49E"],
+    "laranja"  => ["#FDE7D3", "#F7B98A"],
+    "amarelo"  => ["#FFF8DC", "#F3E3A2"],
+    "verde"    => ["#E1F2DC", "#A9D89A"],
+    "turquesa" => ["#D9F1EF", "#8FD3CC"],
+    "azul"     => ["#DDEBFA", "#9CC2EE"],
+    "roxo"     => ["#EAE2F7", "#BFA6E6"],
+    "rosa"     => ["#FBE2EE", "#F2A9C9"],
+];
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $respostas = $_POST["resposta"] ?? [];
+
+    // Respostas aceitas em cada pergunta (o número é o id_pergunta no banco)
+    $permitidas = [
+        1 => ["Sim", "Não", "Não sei"],
+        2 => ["Sim", "Não", "Não sei"],
+        3 => ["Sim", "Não", "Não sei"],
+        4 => ["Sim", "Não", "Não sei"],
+        5 => ["Sim", "Não", "Não sei"],
+        6 => ["Infantil", "Adulto", "Personalizado"],
+    ];
+
+    foreach ($permitidas as $idPergunta => $valores) {
+        if (!isset($respostas[$idPergunta]) || !in_array($respostas[$idPergunta], $valores, true)) {
+            $erro = "Responda todas as perguntas para continuar.";
+            break;
+        }
+    }
+
+    if ($erro === "") {
+
+        $r = $respostas;
+
+        // ===== Configuração de acessibilidade a partir das respostas =====
+        // (regras combinadas pelo grupo; ajustar aqui se mudarem)
+
+        // P1 enxerga mal / P2 dificuldade de tocar → cards grandes
+        $tamanhoCard = ($r[1] !== "Não" || $r[2] === "Sim") ? "Grande" : "Médio";
+
+        // P1 enxerga mal → alto contraste
+        $contraste = ($r[1] === "Sim") ? "Alto" : "Normal";
+
+        // P2 dificuldade de tocar / P3 toca sem querer → mais espaço entre os cards
+        $espacamento = ($r[2] === "Sim" || $r[3] === "Sim") ? "Grande" : "Normal";
+
+        // P3 toca sem querer → tempo maior entre toques (em milissegundos)
+        $debounce = match ($r[3]) {
+            "Sim" => 1000,
+            "Não" => 300,
+            default => 600,
+        };
+
+        // P4 prefere poucos elementos → menos cards por tela
+        $quantidadeCards = match ($r[4]) {
+            "Sim" => 4,
+            "Não" => 8,
+            default => 6,
+        };
+
+        // P5 não sabe ler → esconde o texto embaixo do pictograma
+        $mostrarTexto = ($r[5] === "Não") ? 0 : 1;
+
+        try {
+            $pdo->beginTransaction();
+
+            // 1. Registra cada resposta
+            $stmt = $pdo->prepare(
+                "INSERT INTO resposta (resposta, data_resposta, id_pergunta, id_paciente)
+                 VALUES (?, NOW(), ?, ?)"
+            );
+
+            foreach ($permitidas as $idPergunta => $valores) {
+                $stmt->execute([$r[$idPergunta], $idPergunta, $idPaciente]);
+            }
+
+            // 2. Busca o perfil visual escolhido (P6)
+            $stmt = $pdo->prepare(
+                "SELECT id_visual, cor_fundo_tema_padrao, cor_card_tema_padrao, modo_escuro_padrao
+                 FROM perfil_visual
+                 WHERE nome_perfil_visual = ?"
+            );
+            $stmt->execute([$r[6]]);
+            $perfil = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$perfil) {
+                throw new Exception("Perfil visual não encontrado no banco.");
+            }
+
+            // 3. No Personalizado, usa as cores do tema escolhido
+            if ($r[6] === "Personalizado") {
+                $tema = $_POST["tema_cor"] ?? "azul";
+                if (isset($temas[$tema])) {
+                    $perfil["cor_fundo_tema_padrao"] = $temas[$tema][0];
+                    $perfil["cor_card_tema_padrao"]  = $temas[$tema][1];
+                }
+            }
+
+            // 4. Salva a configuração no paciente
+            $stmt = $pdo->prepare(
+                "UPDATE paciente SET
+                    tamanho_card = ?,
+                    quantidade_cards = ?,
+                    espacamento_cards = ?,
+                    contraste = ?,
+                    mostrar_texto = ?,
+                    tempo_debounce = ?,
+                    id_visual = ?,
+                    cor_fundo_tema = ?,
+                    cor_card_tema = ?,
+                    modo_escuro = ?
+                 WHERE id_paciente = ?"
+            );
+
+            $stmt->execute([
+                $tamanhoCard,
+                $quantidadeCards,
+                $espacamento,
+                $contraste,
+                $mostrarTexto,
+                $debounce,
+                $perfil["id_visual"],
+                $perfil["cor_fundo_tema_padrao"],
+                $perfil["cor_card_tema_padrao"],
+                $perfil["modo_escuro_padrao"],
+                $idPaciente,
+            ]);
+
+            $pdo->commit();
+
+            header("Location: ../paciente/inicio.php");
+            exit;
+
+        } catch (Exception $ex) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
+            $erro = "Não foi possível salvar as respostas. Tente novamente.";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -21,7 +180,7 @@
         <div class="questionario">
 
             <header class="cabecalho-acesso">
-                
+
                 <h1>Vamos conhecer melhor você!</h1>
 
                 <p>
@@ -30,6 +189,12 @@
                 </p>
 
             </header>
+
+            <?php if ($erro !== ""): ?>
+                <div class="alerta alerta-erro" role="alert">
+                    <?= e($erro) ?>
+                </div>
+            <?php endif; ?>
 
             <!-- formulário (o cartão inteiro) -->
             <form id="formOnboarding" method="post" class="card card-questionario">
@@ -300,8 +465,8 @@
                         Próxima
                     </button>
 
-                    <!-- O envio para o banco será implementado depois -->
-                    <button type="button" id="btnConcluir" class="botao">
+                    <!-- envia o formulário para o PHP do topo desta página -->
+                    <button type="submit" id="btnConcluir" class="botao">
                         Concluir configuração
                     </button>
 
