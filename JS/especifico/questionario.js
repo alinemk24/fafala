@@ -12,11 +12,9 @@ const btnConcluir = document.getElementById('btnConcluir');
 
 let atual = 0;
 
-// liga o modo "uma pergunta por vez"
 form.classList.add('em-etapas');
 
 
-// Mostra a pergunta de número "indice" e atualiza o resto da tela
 function mostrarPergunta(indice, moverFoco) {
     perguntas.forEach(function (pergunta, i) {
         pergunta.classList.toggle('ativa', i === indice);
@@ -39,7 +37,6 @@ function mostrarPergunta(indice, moverFoco) {
 
     avisoEtapa.textContent = '';
 
-    // leva o leitor de tela para a nova pergunta
     if (moverFoco) {
         const legend = pergunta.querySelector('legend');
         legend.setAttribute('tabindex', '-1');
@@ -72,13 +69,10 @@ btnVoltar.addEventListener('click', function () {
     mostrarPergunta(atual, true);
 });
 
-// ao escolher uma opção, some o aviso de erro
 form.addEventListener('change', function () {
     avisoEtapa.textContent = '';
 });
 
-// ao concluir, só deixa enviar se a última pergunta foi respondida
-// (as anteriores já foram conferidas no botão "Próxima")
 form.addEventListener('submit', function (evento) {
     if (!respondida(atual)) {
         evento.preventDefault();

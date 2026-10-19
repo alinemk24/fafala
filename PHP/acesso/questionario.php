@@ -1,8 +1,7 @@
 <?php
-// conexao.php já liga a sessão e cria o $pdo
 require_once __DIR__ . "/../tecnico/conexao.php";
 
-// Só entra aqui quem acabou de se cadastrar (ou fez login)
+// só entra aqui quem acabou de se cadastrar (ou fez login)
 if (!isset($_SESSION['id_paciente'])) {
     header("Location: login.php");
     exit;
@@ -11,8 +10,7 @@ if (!isset($_SESSION['id_paciente'])) {
 $idPaciente = $_SESSION['id_paciente'];
 $erro = "";
 
-// Cores de cada tema do "Personalizado": [fundo, card]
-// (ficam aqui no PHP para ninguém conseguir mandar uma cor qualquer)
+// cores do personalizado
 $temas = [
     "vermelho" => ["#FBE1DF", "#F2A49E"],
     "laranja"  => ["#FDE7D3", "#F7B98A"],
@@ -28,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $respostas = $_POST["resposta"] ?? [];
 
-    // Respostas aceitas em cada pergunta (o número é o id_pergunta no banco)
     $permitidas = [
         1 => ["Sim", "Não", "Não sei"],
         2 => ["Sim", "Não", "Não sei"],
@@ -81,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         try {
             $pdo->beginTransaction();
 
-            // 1. Registra cada resposta
+            // registra cada resposta
             $stmt = $pdo->prepare(
                 "INSERT INTO resposta (resposta, data_resposta, id_pergunta, id_paciente)
                  VALUES (?, NOW(), ?, ?)"
@@ -91,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $stmt->execute([$r[$idPergunta], $idPergunta, $idPaciente]);
             }
 
-            // 2. Busca o perfil visual escolhido (P6)
+            // busca o perfil visual escolhido (pergunsta 6)
             $stmt = $pdo->prepare(
                 "SELECT id_visual, cor_fundo_tema_padrao, cor_card_tema_padrao, modo_escuro_padrao
                  FROM perfil_visual
@@ -104,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 throw new Exception("Perfil visual não encontrado no banco.");
             }
 
-            // 3. No Personalizado, usa as cores do tema escolhido
+            // qnd visual eh personalizado, usa as cores do tema escolhido
             if ($r[6] === "Personalizado") {
                 $tema = $_POST["tema_cor"] ?? "azul";
                 if (isset($temas[$tema])) {
@@ -113,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
             }
 
-            // 4. Salva a configuração no paciente
+            // salva a configuração no paciente
             $stmt = $pdo->prepare(
                 "UPDATE paciente SET
                     tamanho_card = ?,
@@ -167,7 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- fonte -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- CSS: geral primeiro, específico por último -->
+    <!-- CSS (deixar o geral por priemiro-->
     <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="stylesheet" href="../../CSS/acessibilidade.css">
     <link rel="stylesheet" href="../../CSS/especifico/acesso_dados.css">
@@ -196,10 +193,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
             <?php endif; ?>
 
-            <!-- formulário (o cartão inteiro) -->
             <form id="formOnboarding" method="post" class="card card-questionario">
 
-                <!-- barra de progresso (só aparece quando o JS liga o modo de etapas) -->
+                <!-- barra de progresso -->
                 <div class="progresso" aria-live="polite">
                     <div class="progresso-topo">
                         <span class="progresso-grupo" id="progressoGrupo">Acessibilidade</span>
@@ -210,7 +206,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </div>
                 </div>
 
-                <!-- espaço do mascote: quando o papagaio estiver pronto, colocar aqui
+                <!-- espaço do mascote NÃO ESQUECER DE COLOCARRRRRRRRRRRRRRRRRRRRRRRR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
                      <img src="../../IMG/fafala.png" alt=""> -->
                 <div class="mascote" aria-hidden="true"></div>
 
@@ -444,7 +440,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <!-- aviso quando tenta avançar sem responder -->
                 <p class="mensagem-erro aviso-etapa" id="avisoEtapa" aria-live="assertive"></p>
 
-                <!-- mensagem final (no modo de etapas, só aparece na última pergunta) -->
+                <!-- mensagem final -->
                 <div class="mensagem-final">
                     <p>
                         Com base nas suas respostas, o Fafala definirá

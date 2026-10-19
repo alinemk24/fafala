@@ -17,8 +17,6 @@ if (is_resource($dados)) {
     $dados = stream_get_contents($dados);
 }
 
-// o banco não guarda o tipo da imagem (png, jpg...),
-// então o PHP descobre olhando o próprio arquivo
 $tipo = (new finfo(FILEINFO_MIME_TYPE))->buffer($dados);
 
 header('Content-Type: ' . $tipo);
