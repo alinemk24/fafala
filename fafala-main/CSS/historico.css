@@ -1,0 +1,380 @@
+/*
+=====================================================
+FAFALA - CSS ESPECÍFICO
+Páginas: Histórico e Relatório
+Depende do CSS base do projeto.
+=====================================================
+*/
+
+/* 1. ESTRUTURA DAS PÁGINAS */
+
+.pagina-historico,
+.pagina-relatorio,
+.conteudo-historico,
+.conteudo-relatorio {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--espaco-g) var(--espaco-m);
+}
+
+.cabecalho-pagina {
+    margin-bottom: var(--espaco-g);
+}
+
+.cabecalho-pagina p {
+    color: var(--texto-suave);
+}
+
+.secao-historico,
+.secao-relatorio,
+.filtros-historico,
+.resultado-historico,
+.resumo-relatorio,
+.grafico-relatorio,
+.tabela-relatorio {
+    margin-bottom: var(--espaco-g);
+}
+
+/* 2. CARTÕES */
+
+.pagina-historico .card,
+.pagina-relatorio .card,
+.conteudo-historico .card,
+.conteudo-relatorio .card {
+    margin-bottom: var(--espaco-g);
+}
+
+.card-informacao {
+    padding: var(--espaco-g);
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-grande);
+    box-shadow: var(--sombra);
+}
+
+.card-informacao h2,
+.card-informacao h3 {
+    margin-bottom: var(--espaco-p);
+}
+
+/* 3. FORMULÁRIO DE FILTROS DO HISTÓRICO */
+
+.filtros-historico form,
+.formulario-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: var(--espaco-m);
+}
+
+.filtros-historico .campo,
+.formulario-filtros .campo {
+    flex: 1 1 180px;
+    min-width: 0;
+    margin-bottom: 0;
+}
+
+.filtros-historico .campo label,
+.formulario-filtros .campo label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.filtros-historico .campo input,
+.filtros-historico .campo select,
+.formulario-filtros .campo input,
+.formulario-filtros .campo select {
+    width: 100%;
+    min-height: var(--altura-campo);
+    padding: 14px var(--espaco-m);
+    border: 1.5px solid var(--borda);
+    border-radius: var(--raio);
+    background: var(--fundo-campo);
+    color: var(--texto);
+    font: inherit;
+}
+
+.filtros-historico .campo input:focus,
+.filtros-historico .campo select:focus,
+.formulario-filtros .campo input:focus,
+.formulario-filtros .campo select:focus {
+    outline: none;
+    border-color: var(--cor-principal);
+    box-shadow: var(--sombra-foco);
+    background: var(--branco);
+}
+
+.botoes-filtro {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--espaco-p);
+}
+
+.botoes-filtro .botao {
+    width: auto;
+}
+
+/* 4. BOTÕES E AÇÕES */
+
+.acoes-pagina {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--espaco-p);
+    margin-top: var(--espaco-m);
+}
+
+.acoes-pagina .botao {
+    width: auto;
+}
+
+.link-voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espaco-p);
+    margin-bottom: var(--espaco-m);
+}
+
+/* 5. INDICADORES DO RELATÓRIO */
+
+.resumo-relatorio,
+.indicadores-relatorio {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--espaco-m);
+    margin-bottom: var(--espaco-g);
+}
+
+.indicador-relatorio,
+.cartao-indicador {
+    min-width: 0;
+    padding: var(--espaco-g);
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-grande);
+    box-shadow: var(--sombra);
+}
+
+.indicador-relatorio h2,
+.cartao-indicador h2 {
+    margin-bottom: var(--espaco-p);
+    font-size: var(--texto-normal);
+    color: var(--texto-suave);
+}
+
+.indicador-relatorio p,
+.cartao-indicador p {
+    margin-bottom: var(--espaco-p);
+    color: var(--texto-suave);
+}
+
+.indicador-relatorio strong,
+.cartao-indicador strong,
+.valor-indicador {
+    display: block;
+    color: var(--cor-principal);
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+/* 6. TABELAS DO HISTÓRICO E RELATÓRIO */
+
+.tabela-responsiva {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    background: var(--branco);
+}
+
+.tabela-responsiva table,
+.tabela-historico,
+.tabela-relatorio table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--branco);
+}
+
+.tabela-responsiva th,
+.tabela-responsiva td,
+.tabela-historico th,
+.tabela-historico td,
+.tabela-relatorio th,
+.tabela-relatorio td {
+    padding: 14px var(--espaco-m);
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--borda);
+}
+
+.tabela-responsiva th,
+.tabela-historico th,
+.tabela-relatorio th {
+    background: var(--cor-principal);
+    color: var(--branco);
+    font-weight: 800;
+}
+
+.tabela-responsiva tbody tr:last-child td,
+.tabela-historico tbody tr:last-child td,
+.tabela-relatorio tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabela-responsiva tbody tr:hover,
+.tabela-historico tbody tr:hover,
+.tabela-relatorio tbody tr:hover {
+    background: var(--cor-clara);
+}
+
+/* 7. ESTADO VAZIO E MENSAGENS */
+
+.estado-vazio,
+.sem-resultados {
+    padding: var(--espaco-g);
+    text-align: center;
+    color: var(--texto-suave);
+    background: var(--cor-clara);
+    border: 1px dashed var(--borda-hover);
+    border-radius: var(--raio);
+}
+
+.alerta {
+    padding: 14px var(--espaco-m);
+    margin-bottom: var(--espaco-m);
+    border-radius: var(--raio);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.alerta-erro {
+    background: var(--erro-fundo);
+    color: var(--erro);
+    border: 1px solid var(--erro);
+}
+
+.alerta-sucesso {
+    background: var(--sucesso-fundo);
+    color: var(--sucesso);
+    border: 1px solid var(--sucesso);
+}
+
+/* 8. TEXTOS E CONTEÚDO */
+
+.texto-suave {
+    color: var(--texto-suave);
+}
+
+.texto-centralizado {
+    text-align: center;
+}
+
+.texto-destaque {
+    color: var(--cor-principal);
+    font-weight: 800;
+}
+
+.pagina-historico,
+.pagina-relatorio,
+.conteudo-historico,
+.conteudo-relatorio {
+    overflow-wrap: anywhere;
+}
+
+/* 9. ACESSIBILIDADE */
+
+.filtros-historico input:focus-visible,
+.filtros-historico select:focus-visible,
+.formulario-filtros input:focus-visible,
+.formulario-filtros select:focus-visible,
+.acoes-pagina a:focus-visible,
+.acoes-pagina button:focus-visible {
+    outline: 3px solid var(--cor-principal);
+    outline-offset: 3px;
+}
+
+/* 10. TABLETS */
+
+@media (max-width: 800px) {
+    .resumo-relatorio,
+    .indicadores-relatorio {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .filtros-historico form,
+    .formulario-filtros {
+        align-items: stretch;
+    }
+}
+
+/* 11. CELULARES */
+
+@media (max-width: 640px) {
+    .pagina-historico,
+    .pagina-relatorio,
+    .conteudo-historico,
+    .conteudo-relatorio {
+        padding: var(--espaco-m);
+    }
+
+    .resumo-relatorio,
+    .indicadores-relatorio {
+        grid-template-columns: 1fr;
+    }
+
+    .indicador-relatorio,
+    .cartao-indicador,
+    .card-informacao {
+        padding: var(--espaco-m);
+    }
+
+    .filtros-historico form,
+    .formulario-filtros {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filtros-historico .campo,
+    .formulario-filtros .campo {
+        width: 100%;
+        flex-basis: auto;
+    }
+
+    .botoes-filtro,
+    .acoes-pagina {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .botoes-filtro .botao,
+    .acoes-pagina .botao {
+        width: 100%;
+    }
+
+    .tabela-responsiva th,
+    .tabela-responsiva td,
+    .tabela-historico th,
+    .tabela-historico td,
+    .tabela-relatorio th,
+    .tabela-relatorio td {
+        padding: 10px 12px;
+    }
+}
+
+/* 12. REDUÇÃO DE MOVIMENTO */
+
+@media (prefers-reduced-motion: reduce) {
+    .pagina-historico *,
+    .pagina-relatorio *,
+    .conteudo-historico *,
+    .conteudo-relatorio * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}
